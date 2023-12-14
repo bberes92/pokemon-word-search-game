@@ -34,6 +34,7 @@ function GameBoard() {
         wordsToFind.forEach((word) => {
             if(word == currentSelectedWord){
                 alert("Nice!")
+                setCurrentSelectedWord("");
             }
         })
     }
