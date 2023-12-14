@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./GameBoard.css"
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 function GameBoard() {
 
@@ -22,28 +23,31 @@ function GameBoard() {
 
     const wordsToFind = ["CHARIZARD", "PIDGEY", "PIKACHU"]; 
 
-    function cellClicked(val) {
-        setCurrentSelectedWord(`${currentSelectedWord}${val}`);
+    function cellClicked(e, key) {
+        console.log(key);
+        setCurrentSelectedWord(`${currentSelectedWord}${e.target.dataset.value}`);
+        e.target.style.backgroundColor = "green";
+
     }
 
     function wordSubmit() {
         wordsToFind.forEach((word) => {
             if(word == currentSelectedWord){
-                console.log("Match")
+                alert("Nice!")
             }
         })
     }
 
     return (
-        <div>
-        <Table bordered size="sm" variant="dark">
+        <Container>
+        <Table size="sm" variant="dark">
             <tbody>
                 {board.map((row) => {
                     return (
                         <tr>
-                            {row.map((letter) => {
+                            {row.map((letter, index) => {
                                 return (
-                                    <td onClick={()=>{cellClicked(letter)}}>{letter}</td>
+                                    <td className="board-cell" key={index} data-value={letter} onClick={(e)=>{cellClicked(e, index)}}>{letter}</td>
                                 )
                             })}
                         </tr>
@@ -51,10 +55,12 @@ function GameBoard() {
                 })}
             </tbody>
         </Table>
-        <p>{wordsToFind}</p>
-        <h1>{currentSelectedWord}</h1>
         <Button onClick={() => {wordSubmit()}}>Submit</Button>
-        </div>
+        {wordsToFind.map((word) => {
+            return (<p>{word}</p>)
+        })}
+        <h1>{currentSelectedWord}</h1>
+        </Container>
     )
 }
 

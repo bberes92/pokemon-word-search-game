@@ -1,0 +1,10 @@
+.board-cell {
+    text-align: center;
+    font-size: 25px;
+}
+
+.board-cell:hover {
+    color: rgb(0, 229, 255);
+    background-color: rgb(114, 114, 114);
+    cursor: pointer;
+}
