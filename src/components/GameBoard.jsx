@@ -21,22 +21,25 @@ function GameBoard() {
         ["A", "B", "C", "D", "P", "I", "D", "G", "E", "Y"]
     ];
 
-    const wordsToFind = ["CHARIZARD", "PIDGEY", "PIKACHU"]; 
+    const wordsToFind = ["CHARIZARD", "PIDGEY", "PIKACHU"];
 
     function cellClicked(e, key) {
         console.log(key);
         setCurrentSelectedWord(`${currentSelectedWord}${e.target.dataset.value}`);
-        e.target.style.backgroundColor = "green";
+        e.target.style.color = "green";
+        //e.target.style.textDecoration="line-through";
 
     }
 
     function wordSubmit() {
-        wordsToFind.forEach((word) => {
-            if(word == currentSelectedWord){
-                alert("Nice!")
-                setCurrentSelectedWord("");
-            }
-        })
+        if(wordsToFind.includes(currentSelectedWord)) {
+            alert("Nice! Match Founded!");
+            setCurrentSelectedWord("");
+        }
+        else {
+            alert("Wrong Word!");
+            setCurrentSelectedWord("");
+        }
     }
 
     return (
