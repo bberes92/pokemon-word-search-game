@@ -8,3 +8,7 @@
     background-color: rgb(114, 114, 114);
     cursor: pointer;
 }
+
+.line-through {
+    text-decoration: line-through;
+}
