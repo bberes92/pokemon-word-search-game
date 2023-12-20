@@ -4,6 +4,7 @@ import * as pokemons from "../pokemons.json";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import WordsList from "./WordsList";
 
 function GameBoard() {
 
@@ -71,11 +72,7 @@ function GameBoard() {
             </tbody>
         </Table>
         <Button onClick={() => {wordSubmit()}}>Submit</Button>
-        {wordsToFind.map((word) => {
-            if(!word["isFounded"]){return (<p>{word["word"]}</p>)}
-            else{return (<p className="line-through">{word["word"]}</p>)}
-        })}
-        <h1>{currentSelectedWord}</h1>
+        {wordsToFind && (<WordsList words={wordsToFind}/>)}
         </Container>
     )
 }
