@@ -23,7 +23,7 @@ function GameBoard() {
         }
       }, []);
 
-    
+    console.log(wordsToFind);
 
     const board = [
         ["A", "C", "H", "A", "R", "I", "Z", "A", "R", "D"],
@@ -48,7 +48,13 @@ function GameBoard() {
         wordsToFind.forEach((item) => {
             if(item["word"] == currentSelectedWord) {
                 alert("Nice! Match Founded!");
-                item["isFounded"] = true;
+                //Find the right index to update
+                const newState = [...wordsToFind];
+                    newState[0] = { 
+                        ...newState[0],
+                        isFounded: true,
+                    }
+                setWordsToFind(newState);
                 currentSelectedWord = "";
             }
         })
