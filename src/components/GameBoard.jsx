@@ -10,22 +10,14 @@ function GameBoard() {
 
     const [wordsToFind, setWordsToFind] = useState([]);
     let currentSelectedWord = "";
-    const pokemonsList = pokemons["default"];
-    const min = Math.ceil(0);
-    const max = Math.floor(51);
+    let numOfWordsToFind = 1;
+    
 
     useEffect(() => {
-        for(let i = 0; i < 2; i++) {
-            let currID = Math.floor(Math.random() * (max - min) + min);
-            let name = (pokemonsList[currID]["name"]).toUpperCase();
-            let newWord = {"word" : name, "isFounded" : false};
-            setWordsToFind((words) => [...words, newWord]);
-        }
+        newGame();
       }, []);
 
-    console.log(wordsToFind);
-
-    const board = [
+     const gameBoard = [
         ["A", "C", "H", "A", "R", "I", "Z", "A", "R", "D"],
         ["P", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
         ["I", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
@@ -38,6 +30,22 @@ function GameBoard() {
         ["A", "B", "C", "D", "P", "I", "D", "G", "E", "Y"]
     ];
 
+    function newGame() {
+
+        const pokemonsList = pokemons["default"];
+        const min = Math.ceil(0);
+        const max = Math.floor(26);
+
+        setWordsToFind([]);
+        
+        for(let i = 0; i < 1; i++) {
+            let currID = Math.floor(Math.random() * (max - min) + min);
+            let name = (pokemonsList[currID]["name"]).toUpperCase();
+            let newWord = {"word" : name, "isFounded" : false};
+            setWordsToFind((words) => [...words, newWord]);
+        }
+    }
+
     function cellClicked(e, key) {
         console.log(key);
         currentSelectedWord = `${currentSelectedWord}${e.target.dataset.value}`;
@@ -45,26 +53,31 @@ function GameBoard() {
     }
 
     function wordSubmit() {
-        wordsToFind.forEach((item) => {
-            if(item["word"] == currentSelectedWord) {
+        for(let [index, entry] of wordsToFind.entries()) {
+            if(entry["word"] == currentSelectedWord) {
                 alert("Nice! Match Founded!");
-                //Find the right index to update
                 const newState = [...wordsToFind];
-                    newState[0] = { 
-                        ...newState[0],
+                    newState[index] = { 
+                        ...newState[index],
                         isFounded: true,
                     }
                 setWordsToFind(newState);
                 currentSelectedWord = "";
+                numOfWordsToFind -= 1;
+                if(numOfWordsToFind == 0) {
+                    alert("Nice! All Founded!");
+                    newGame();
+                }
+
             }
-        })
+        }
     }
 
     return (
         <Container>
         <Table size="sm" variant="dark">
             <tbody>
-                {board.map((row) => {
+                {gameBoard.map((row) => {
                     return (
                         <tr>
                             {row.map((letter, index) => {
